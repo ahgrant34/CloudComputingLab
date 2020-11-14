@@ -110,14 +110,36 @@ public class Q1_a extends Configured implements Tool {
                                 // Now we parse the string into a JsonElement so we can dig into it
                                 JsonElement jsonTree = parser.parse(jsonString);
 //                              LOG.warn(jsonTree);
-
+				
+				// Create Json Object
                                 JsonObject jsonObject = jsonTree.getAsJsonObject();
-
-                                String description = jsonObject.get("description").getAsString();
+				
+				// create json array with all of the descriptions as strings 
+				JsonArray descriptions = jsonObject.get("description").getAsJsonArray();
+				
+				
+				
+				
+				for(int i = 0; i < descriptions.size(); i++){
+    					String AllWords = a.get(i).getAsString();
+    					... do something with s ...
+				}
+				
+				List<String> descriptions = new ArrayList<String>();
+				
+				for(int i = 0; i < jsonArray.length(); i++){
+     					descriptions.add(jsonArray.getString(i));
+				}
+				
+				
+				
+				// get as array of strings
+                                //String[] description = jsonObject.get("description").getAsString();
                                 	
 					
 					//tokenize string into array
-					
+					String s = "This is a sample sentence with []s.";
+					String[] words = s.split("\\W+");
 						
 					//Clean Text	
 					//remove br html

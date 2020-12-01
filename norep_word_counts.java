@@ -161,7 +161,7 @@ public class norep_word_counts extends Configured implements Tool {
 				int num_words = WordsNoRep.length;
 				String num_words_str = Integer.toString(num_words);
 				
-				context.write(new Text(num_words),one);
+				context.write(new Text(num_words_str),one);
 
                                 // Here we increment a counter that we can read when the job is done
                                 rowsProcessed.increment(1);

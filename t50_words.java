@@ -161,7 +161,7 @@ public class t50_words extends Configured implements Tool {
 				int num_words = WordsNoRep.length;
 				
 				
-				context.write(new Text(num_words));
+				context.write(new Text(num_words),one);
 
                                 // Here we increment a counter that we can read when the job is done
                                 rowsProcessed.increment(1);

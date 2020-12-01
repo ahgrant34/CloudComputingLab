@@ -159,7 +159,7 @@ public class norep_word_counts extends Configured implements Tool {
 					Set<String> wordSet2 = new HashSet<String>(WordsNoRepList);
 		
 				int num_words = WordsNoRep.length;
-				
+				String num_words_str = Integer.toString(num_words);
 				
 				context.write(new Text(num_words),one);
 

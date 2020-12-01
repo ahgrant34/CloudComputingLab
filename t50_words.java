@@ -34,13 +34,13 @@ import org.slf4j.LoggerFactory;
  * This Map-Reduce code will go through every Amazon product in rfox12:products
  * It will then output data on the top-level JSON keys
  */
-public class Q1_a extends Configured implements Tool {
+public class t50_words extends Configured implements Tool {
         // Just used for logging
-        protected static final Logger LOG = LoggerFactory.getLogger(Q1_a.class);
+        protected static final Logger LOG = LoggerFactory.getLogger(t50_words.class);
 
         // This is the execution entry point for Java programs
         public static void main(String[] args) throws Exception {
-                int res = ToolRunner.run(HBaseConfiguration.create(), new Q1_a(), args);
+                int res = ToolRunner.run(HBaseConfiguration.create(), new t50_words(), args);
                 System.exit(res);
         }
 
@@ -51,8 +51,8 @@ public class Q1_a extends Configured implements Tool {
                 }
 
                 // Now we create and configure a map-reduce "job"
-                Job job = Job.getInstance(getConf(), "Q1_a");
-                job.setJarByClass(Q1_a.class);
+                Job job = Job.getInstance(getConf(), "t50_words");
+                job.setJarByClass(t50_words.class);
 
                 // By default we are going to scan every row in the table
                 Scan scan = new Scan();
@@ -97,7 +97,7 @@ public class Q1_a extends Configured implements Tool {
                 @Override
                 protected void setup(Context context) {
                         parser = new JsonParser();
-                        rowsProcessed = context.getCounter("Q1_a", "Rows Processed");
+                        rowsProcessed = context.getCounter("t50_words", "Rows Processed");
                 }
 
                 // This "map" method is called with every row scanned.
@@ -114,62 +114,85 @@ public class Q1_a extends Configured implements Tool {
 				// Create Json Object
                                 JsonObject jsonObject = jsonTree.getAsJsonObject();
 				
-				// create json array with all of the descriptions as strings 
-				JsonArray descriptions = jsonObject.get("description").getAsJsonArray();
-				
-				
-				
-				
-				for(int i = 0; i < descriptions.size(); i++){
-    					String AllWords = a.get(i).getAsString();
-    					... do something with s ...
+				  // create json array with all of the descriptions as strings 
+				    String descriptions = jsonObject.get("description").getAsString();
+
+
+				//tokenize
+				    String[] Allwords = descriptions.toLowerCase().split("\\W+");
+
+
+			       // Iterate through string array of word
+				for(int i = 0; i< Allwords.length; i++){
+				//remove br html
+				Allwords[i] = Allwords[i].replaceAll("<br>","");
+				//remove all non letter items
+				Allwords[i] = Allwords[i].replaceAll("[^a-zA-Z]+","");
+
 				}
+
+				// Remove empty tokens and words of length 1
+				Allwords = Arrays.stream(Allwords)
+					     .filter(s -> (s != null && s.length() > 1))
+					     .toArray(String[]::new);    
+
+
+					//System.out.println("Word Counts With Repeated words included");
+					List<String> TotalWordList = Arrays.asList(Allwords);
+				Set<String> wordSet = new HashSet<String>(TotalWordList);
+
+				// Convert Set to String array 
+				// Create String[] of size of setOfString 
+				String[] WordsNoRep = new String[wordSet.size()]; 
+
+				// Copy elements from set to string array 
+				// using advanced for loop 
+				int index = 0; 
+				for (String str : wordSet) 
+				    WordsNoRep[index++] = str; 
 				
-				List<String> descriptions = new ArrayList<String>();
-				
-				for(int i = 0; i < jsonArray.length(); i++){
-     					descriptions.add(jsonArray.getString(i));
+				                
+				int count1;
+				count1 = 0;
+
+				int count2;
+				count2 = 0;
+
+        			System.out.println();
+		
+				System.out.println("Word Counts With Repeated words included");
+		
+				for(String s: wordSet){
+					count1 = count1 + 1;
+
+					System.out.println(count1 + " " + s + " " +Collections.frequency(TotalWordList,s));
+
+					if (count1 == 50) {
+						break;
+					}
+
 				}
-				
-				
-				
-				// get as array of strings
-                                //String[] description = jsonObject.get("description").getAsString();
-                                	
+
+				System.out.println();
+				System.out.println();
+		
+				List<String> WordsNoRepList = Arrays.asList(WordsNoRep);
+				Set<String> wordSet2 = new HashSet<String>(WordsNoRepList);
+
+				System.out.println("Words with no repetition per description:");
+		
+				for(String s: wordSet2){
+					count2 = count2 + 1;
 					
-					//tokenize string into array
-					String s = "This is a sample sentence with []s.";
-					String[] words = s.split("\\W+");
-						
-					//Clean Text	
-					//remove br html
-					String description = description.replaceAll("<br>","");
-					
-					//remove all non letter items
-					String description = description.replaceAll("[^a-zA-Z]+","");
-					
-					//find set of each array
-						
-					//list of all words
-					
-					//word count for sent in descending order
-						
-					//word count for all words in descending order
+					System.out.println(count2 + " " + s + " " +Collections.frequency(WordsNoRepList,s));
+        
+					if (count2 == 50) {
+					break;
+					}	
+				}   
 				
 				
 				
-				if (maincat.startsWith("<")) {
-                                        String pattern = ".*alt=\"([^\"]*)\".*";
-                                        Pattern p = Pattern.compile(pattern);
-                                        Matcher m = p.matcher(maincat);
-                                        while(m.find()) { maincat = m.group(1); }
-                                }
-				
-				
-				
-				
-				
-                                context.write(new Text(maincat),one);
 
                                 // Here we increment a counter that we can read when the job is done
                                 rowsProcessed.increment(1);

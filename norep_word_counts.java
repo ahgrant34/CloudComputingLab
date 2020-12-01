@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
  * This Map-Reduce code will go through every Amazon product in rfox12:products
  * It will then output data on the top-level JSON keys
  */
-public class t50_words extends Configured implements Tool {
+public class norep_word_counts extends Configured implements Tool {
         // Just used for logging
         protected static final Logger LOG = LoggerFactory.getLogger(t50_words.class);
 
@@ -55,7 +55,7 @@ public class t50_words extends Configured implements Tool {
                 }
 
                 // Now we create and configure a map-reduce "job"
-                Job job = Job.getInstance(getConf(), "t50_words");
+                Job job = Job.getInstance(getConf(), "norep_word_counts");
                 job.setJarByClass(t50_words.class);
 
                 // By default we are going to scan every row in the table

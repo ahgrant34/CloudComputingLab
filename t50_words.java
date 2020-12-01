@@ -146,19 +146,19 @@ public class t50_words extends Configured implements Tool {
 				Set<String> wordSet = new HashSet<String>(TotalWordList);
 
 				// Convert Set to String array 
-        // Create String[] of size of setOfString 
-        String[] WordsNoRep = new String[wordSet.size()]; 
-  
-        // Copy elements from set to string array 
-        // using advanced for loop 
-        int index = 0; 
-        for (String str : wordSet) 
-            WordsNoRep[index++] = str; 
+				// Create String[] of size of setOfString 
+				String[] WordsNoRep = new String[wordSet.size()]; 
+
+				// Copy elements from set to string array 
+				// using advanced for loop 
+				int index = 0; 
+				for (String str : wordSet) 
+				    WordsNoRep[index++] = str; 
+
+					List<String> WordsNoRepList = Arrays.asList(WordsNoRep);
+					Set<String> wordSet2 = new HashSet<String>(WordsNoRepList);
 		
-		List<String> WordsNoRepList = Arrays.asList(WordsNoRep);
-		Set<String> wordSet2 = new HashSet<String>(WordsNoRepList);
-		
-		int num_words = WordsNoRep.length;
+				int num_words = WordsNoRep.length;
 				
 				
 				context.write(new Text(num_words));

@@ -40,11 +40,11 @@ import java.util.stream.Collectors;
  */
 public class norep_word_counts extends Configured implements Tool {
         // Just used for logging
-        protected static final Logger LOG = LoggerFactory.getLogger(t50_words.class);
+        protected static final Logger LOG = LoggerFactory.getLogger(norep_word_counts.class);
 
         // This is the execution entry point for Java programs
         public static void main(String[] args) throws Exception {
-                int res = ToolRunner.run(HBaseConfiguration.create(), new t50_words(), args);
+                int res = ToolRunner.run(HBaseConfiguration.create(), new norep_word_counts(), args);
                 System.exit(res);
         }
 
@@ -56,7 +56,7 @@ public class norep_word_counts extends Configured implements Tool {
 
                 // Now we create and configure a map-reduce "job"
                 Job job = Job.getInstance(getConf(), "norep_word_counts");
-                job.setJarByClass(t50_words.class);
+                job.setJarByClass(norep_word_counts.class);
 
                 // By default we are going to scan every row in the table
                 Scan scan = new Scan();
@@ -101,7 +101,7 @@ public class norep_word_counts extends Configured implements Tool {
                 @Override
                 protected void setup(Context context) {
                         parser = new JsonParser();
-                        rowsProcessed = context.getCounter("t50_words", "Rows Processed");
+                        rowsProcessed = context.getCounter("norep_word_counts", "Rows Processed");
                 }
 
                 // This "map" method is called with every row scanned.

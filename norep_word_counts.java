@@ -49,8 +49,8 @@ public class norep_word_counts extends Configured implements Tool {
         }
 
         public int run(String[] args) throws Exception {
-                if (args.length != 1) {
-                        System.err.println("Need 1 argument (hdfs output path), got: " + args.length);
+                if (args.length > 3) {
+                        System.err.println("Not more than 3 arguments (hdfs output path), got: " + args.length);
                         return -1;
                 }
 

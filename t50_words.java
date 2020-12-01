@@ -30,6 +30,10 @@ import com.google.gson.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.*;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 /***
  * This Map-Reduce code will go through every Amazon product in rfox12:products
  * It will then output data on the top-level JSON keys

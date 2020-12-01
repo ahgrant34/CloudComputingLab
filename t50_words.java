@@ -146,57 +146,22 @@ public class t50_words extends Configured implements Tool {
 				Set<String> wordSet = new HashSet<String>(TotalWordList);
 
 				// Convert Set to String array 
-				// Create String[] of size of setOfString 
-				String[] WordsNoRep = new String[wordSet.size()]; 
-
-				// Copy elements from set to string array 
-				// using advanced for loop 
-				int index = 0; 
-				for (String str : wordSet) 
-				    WordsNoRep[index++] = str; 
-				
-				                
-				int count1;
-				count1 = 0;
-
-				int count2;
-				count2 = 0;
-
-        			System.out.println();
+        // Create String[] of size of setOfString 
+        String[] WordsNoRep = new String[wordSet.size()]; 
+  
+        // Copy elements from set to string array 
+        // using advanced for loop 
+        int index = 0; 
+        for (String str : wordSet) 
+            WordsNoRep[index++] = str; 
 		
-				System.out.println("Word Counts With Repeated words included");
+		List<String> WordsNoRepList = Arrays.asList(WordsNoRep);
+		Set<String> wordSet2 = new HashSet<String>(WordsNoRepList);
 		
-				for(String s: wordSet){
-					count1 = count1 + 1;
-
-					System.out.println(count1 + " " + s + " " +Collections.frequency(TotalWordList,s));
-
-					if (count1 == 50) {
-						break;
-					}
-
-				}
-
-				System.out.println();
-				System.out.println();
-		
-				List<String> WordsNoRepList = Arrays.asList(WordsNoRep);
-				Set<String> wordSet2 = new HashSet<String>(WordsNoRepList);
-
-				System.out.println("Words with no repetition per description:");
-		
-				for(String s: wordSet2){
-					count2 = count2 + 1;
-					
-					System.out.println(count2 + " " + s + " " +Collections.frequency(WordsNoRepList,s));
-        
-					if (count2 == 50) {
-					break;
-					}	
-				}   
+		int num_words = WordsNoRep.length;
 				
 				
-				
+				context.write(new Text(num_words));
 
                                 // Here we increment a counter that we can read when the job is done
                                 rowsProcessed.increment(1);

@@ -84,7 +84,7 @@ public class unique_word_count extends Configured implements Tool {
 		scan.setCacheBlocks(false); // don't set to true for MR jobs
 
 		// This helper will configure how table data feeds into the "map" method
-		TableMapReduceUtil.initTableMapperJob("rfox12:products_10000", // input HBase table name
+		TableMapReduceUtil.initTableMapperJob("rfox12:products", // input HBase table name
 				scan, // Scan instance to control CF and attribute selection
 				MapReduceMapper.class, // Mapper class
 				Text.class, // Mapper output key

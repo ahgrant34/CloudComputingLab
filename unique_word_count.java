@@ -48,14 +48,14 @@ import com.google.gson.JsonParser;
  * This Map-Reduce code will go through every Amazon product in rfox12:products
  * It will then output data on the top-level JSON keys
  */
-public class AmazonProductDescAnalysis extends Configured implements Tool {
+public class unique_word_count extends Configured implements Tool {
 
 	// Just used for logging
-	protected static final Logger LOG = LoggerFactory.getLogger(AmazonProductDescAnalysis.class);
+	protected static final Logger LOG = LoggerFactory.getLogger(unique_word_count.class);
 
 	// This is the execution entry point for Java programs
 	public static void main(String[] args) throws Exception {
-		int res = ToolRunner.run(HBaseConfiguration.create(), new AmazonProductDescAnalysis(), args);
+		int res = ToolRunner.run(HBaseConfiguration.create(), new unique_word_count(), args);
 		System.exit(res);
 	}
 
@@ -67,8 +67,8 @@ public class AmazonProductDescAnalysis extends Configured implements Tool {
 		}
 
 		// Now we create and configure a map-reduce "job"
-		Job job = Job.getInstance(getConf(), "AmazonProductDescAnalysis");
-		job.setJarByClass(AmazonProductDescAnalysis.class);
+		Job job = Job.getInstance(getConf(), "unique_word_count");
+		job.setJarByClass(unique_word_count.class);
 		for (int i = 0; i < args.length; i += 1) {
 			  if ("-skip".equals(args[i])) {
 				job.getConfiguration().setBoolean("wordcount.skip.patterns", true);
@@ -125,7 +125,7 @@ public class AmazonProductDescAnalysis extends Configured implements Tool {
 		protected void setup(Context context) throws IOException,
         InterruptedException{
 			parser = new JsonParser();
-			rowsProcessed = context.getCounter("AmazonProductDescAnalysis", "Rows Processed");
+			rowsProcessed = context.getCounter("unique_word_count", "Rows Processed");
 			if (context.getInputSplit() instanceof FileSplit) {
 			  this.input = ((FileSplit) context.getInputSplit()).getPath().toString();
 			} else {
@@ -197,16 +197,15 @@ public class AmazonProductDescAnalysis extends Configured implements Tool {
 						.filter(item -> !item.isEmpty()).distinct()
 						.collect(Collectors.toCollection(ArrayList<String>::new));
 
-				//System.out.println(
-				//		"Product description words coung after removing duplicates and before removing stopwords: "
-				//				+ allWords.size());
-				/*URL path = AmazonProductDescAnalysis.class.getClass().getResource("/stopwords.txt");
-				List<String> stopwords = Files.readAllLines(Paths.get(path.getPath().toString().substring(1)));
-				allWords.removeAll(stopwords);
-				System.out.println(
-						"Product description words count after removing duplicates and stopwords: " + allWords.size());
+				        //System.out.println("Word Counts With Repeated words included");
+					//List<String> TotalWordList = Arrays.asList(allWords);
+       					 Set<String> wordSet = new HashSet<String>(allWords);
+        
+					// Convert Set to String array 
+					// Create String[] of size of setOfString 
+					String[] WordsNoRep = new String[wordSet.size()];
 				*/
-				Iterator itr = allWords.iterator();
+				Iterator itr = WordsNoRep.iterator();
 				while (itr.hasNext()) {
 					String str=itr.next().toString();
 					if (patternsToSkip.contains(str)) {

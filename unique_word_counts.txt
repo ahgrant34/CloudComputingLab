@@ -1,4 +1,4 @@
-Number of Words in Description	Count
+Number of Unique Words in Description	Count
 0	12537
 1	38686
 2	85584

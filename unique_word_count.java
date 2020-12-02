@@ -204,8 +204,12 @@ public class unique_word_count extends Configured implements Tool {
 					// Convert Set to String array 
 					// Create String[] of size of setOfString 
 					String[] WordsNoRep = new String[wordSet.size()];
+				
+					int num_words = WordsNoRep.length;
+					String num_words_str = Integer.toString(num_words);
+				
 				*/
-				Iterator itr = WordsNoRep.iterator();
+				Iterator itr = num_words_str.iterator();
 				while (itr.hasNext()) {
 					String str=itr.next().toString();
 					if (patternsToSkip.contains(str)) {

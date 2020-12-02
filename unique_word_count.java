@@ -208,18 +208,9 @@ public class unique_word_count extends Configured implements Tool {
 					int num_words = WordsNoRep.length;
 					String num_words_str = Integer.toString(num_words);
 				
-				*/
-				Iterator itr = num_words_str.iterator();
-				while (itr.hasNext()) {
-					String str=itr.next().toString();
-					if (patternsToSkip.contains(str)) {
-						LOG.warn("Skipping value: "+str);
-					continue;
-					}
-					else{
-					context.write(new Text(str), one);
-					}
-				}
+				
+					context.write(new Text(num_words_str), one);
+				
 
 
 				// Here we increment a counter that we can read when the job is done
